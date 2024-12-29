@@ -1,0 +1,28 @@
+#? Full NGINX Tutorial - Demo Project with Node.js, Docker
+Refer -> "https://www.youtube.com/watch?v=q8OleYuqntY"
+
+#! Intro & Course Overview
+
+The introduction to the video "Full NGINX Tutorial - Demo Project with Node.js, Docker" states that the video will:
+● Explain NGINX, including what it is used for, its main use cases, and why it was created.
+● Provide a hands-on demo using a simple Node.js application. This demo will include:
+    ○ A Node.js application that serves an index.html file.
+    ○ Three instances of the application running as Docker containers. Viewers will write the code and configuration themselves to gain a deeper understanding.
+● Install and configure NGINX as a reverse proxy to load balance requests to the application instances.
+    ○ This section will teach viewers how NGINX configuration works and how to work with NGINX in general.
+● Show viewers how to configure a secure HTTPS connection to the application using NGINX.
+    ○ This will include enabling SSL and configuring NGINX with a self-signed TLS certificate.
+● The video will explain all the steps and configuration details in detail. The goal is to help viewers understand every concept, going beyond a basic surface-level understanding.
+
+
+#! What is NGINX? What is NGINX used for?
+● Before NGINX, a web server would assemble a web page and send it to the user's browser.
+● NGINX is a high performance web server that runs on a server machine and can respond to requests from a browser.
+● With NGINX, requests from a browser are handled by a load balancer, which proxies the requests to multiple web servers.
+
+What NGINX does:
+● Load Balancing: NGINX distributes the load among the web servers.
+● Caching: NGINX can store a final copy of a page and send it to every user who requests it.
+● Security: NGINX acts as a security shield for servers, reduces the attack surface, and encrypts communications.
+● Compression: NGINX can compress large images and video files, saving bandwidth for both the user and server.
+● Reverse Proxy: NGINX receives incoming traffic and forwards it to the right service.
