@@ -1,4 +1,4 @@
-#? How SSL Works - 
+#? How SSL Works -> "https://youtu.be/0yw-z6f7Mb4?si=taKmSLcAcdbC7hYc"
 
 #? Full NGINX Tutorial - Demo Project with Node.js, Docker
 Refer -> "https://www.youtube.com/watch?v=q8OleYuqntY"
@@ -79,3 +79,16 @@ Key Configuration Points:
 
 Important: After making configuration changes, reload or restart NGINX for them to take effect.
 
+#! Demo Project
+1. Create a index.html file which uses images from images folder.
+2. Create a server.js file which uses express to serve the index.html file along with the static files like images and styles.
+3. Create a .env file which contains the APP_NAME variable.
+4. Create a package.json file which contains the dependencies like express,path and dotenv.
+5. Install the dependencies using npm install.
+
+6. Now we will dockerize our app and put nginx proxy in front of our application. 
+7. Due to this, rather than the user request coming directly to node.js server, it will first go to the nginx proxy and then nginx proxy will forward the request to the node.js server.
+8. Download docker and docker desktop from the official website. "https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository" and "https://docs.docker.com/desktop/setup/install/linux/ubuntu/"
+9. Lets dockerize our application where we will start 3 instances of the node.js server as docker containers.
+    * Create a dockerfile which contains the instructions(blueprint) to build the docker image, defining what goes into the image and how the container should behave when it runs.
+    * Create a docker image which is a standalone execution environment for our application which includes everything needed to run our application. It's a snapshot of an environment that can be used to create and run our application.
