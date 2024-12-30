@@ -1,3 +1,5 @@
+#? How SSL Works - 
+
 #? Full NGINX Tutorial - Demo Project with Node.js, Docker
 Refer -> "https://www.youtube.com/watch?v=q8OleYuqntY"
 
@@ -26,3 +28,54 @@ What NGINX does:
 ● Security: NGINX acts as a security shield for servers, reduces the attack surface, and encrypts communications.
 ● Compression: NGINX can compress large images and video files, saving bandwidth for both the user and server.
 ● Reverse Proxy: NGINX receives incoming traffic and forwards it to the right service.
+
+NGINX is best because:
+● It is fast and efficient.
+● It is easy to use and configure.
+● It is open source and free to use.
+● It is flexible and scalable
+● Low Resource Usage
+
+#! How to configure NGINX?
+Question: How to tell NGINX whether to act as a web server or a proxy server?
+Question: How do you configure the caching, SSL, etc?
+
+Answer: All this is done in the configuration file of nginx called "nginx.conf" file which is usually located in the "/etc/nginx" directory.
+
+To configure NGINX as a reverse proxy and load balancer, you primarily work with the nginx.conf configuration file.
+Key Configuration Points:
+● Performance and Resource Management:
+    ○ worker_processes: Define the number of worker processes. In production, setting it to "Auto" or aligning it with the number of CPU cores is recommended.
+    ○ events: Within this context, configure worker_connections to determine how many simultaneous connections each worker process can handle.
+
+● HTTP Server and Proxy Configuration:
+    ○ http Block: Contains the primary configuration for handling HTTP requests.
+        ■ server Block: Define how NGINX listens for and handles requests.
+            ●listen: Specify the port NGINX listens on (e.g., 8080 for HTTP, 443 for HTTPS).
+            ●server_name: Set the domain or IP address (e.g., "localhost").
+            ●location: Define rules for handling requests to specific URL paths.
+
+● Reverse Proxy Setup:
+    ○ proxy_pass: Explicitly configure NGINX to act as a reverse proxy, forwarding requests to a defined upstream group of backend servers.
+    ○ upstream Block: Define a named group of backend servers (e.g., "nodejs_cluster"). List the server addresses and ports.
+
+    ● Header Modification:
+    ○ proxy_set_header: Modify headers in requests forwarded to upstream servers. Important examples include:
+        ■ Host: Forward the original host header to the backend.
+        ■ X-Real-IP: Pass the client’s IP address to the backend.
+
+● Content-Type Handling:
+    ○ include mime.types: Include the MIME type of files in responses (e.g., "text/html" for HTML).
+
+● Load Balancing Algorithm:
+    ○ least_conn (within an upstream block): Configure NGINX to use the "least connections" algorithm, directing requests to the backend server with the fewest active connections.
+
+● HTTPS (SSL) Configuration:
+    ○ ssl_certificate: Specify the path to your SSL certificate file.
+    ○ ssl_certificate_key: Specify the path to your private key file.
+
+● Redirection:
+    ○ return 301: Redirect requests from one location to another, commonly used to force all traffic to HTTPS.
+
+Important: After making configuration changes, reload or restart NGINX for them to take effect.
+
