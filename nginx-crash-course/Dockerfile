@@ -16,7 +16,8 @@ COPY server.js .
 COPY index.html .
 COPY images ./images
 COPY styles.css .
-COPY .env .
+#! Remove the .env file because we will pass environment variables in docker-compose file
+# COPY .env .
 
 # Expose port 3000 for the application
 EXPOSE 3000
