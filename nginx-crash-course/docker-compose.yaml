@@ -1,0 +1,43 @@
+# Define the version of the Docker Compose file format
+version: "3"
+
+# Define the services that will be managed by Docker Compose
+services:
+  # Service for the first application (app1)
+  app1:
+    # Build the Docker image from the current directory (.)
+    build: .
+
+    # Set environment variables for this container
+    environment:
+      - APP_NAME=ayush-nginx-crash-course-App1 # Set the app name to 'ayush-nginx-crash-course-App1' as an environment variable
+
+    # Map port 3001 on the host machine to port 3000 inside the container
+    ports:
+      - "3001:3000"
+
+  # Service for the second application (app2)
+  app2:
+    # Build the Docker image from the current directory (.)
+    build: .
+
+    # Set environment variables for this container
+    environment:
+      - APP_NAME=ayush-nginx-crash-course-App2 # Set the app name to 'ayush-nginx-crash-course-App2' as an environment variable
+
+    # Map port 3002 on the host machine to port 3000 inside the container
+    ports:
+      - "3002:3000"
+
+  # Service for the third application (app3)
+  app3:
+    # Build the Docker image from the current directory (.)
+    build: .
+
+    # Set environment variables for this container
+    environment:
+      - APP_NAME=ayush-nginx-crash-course-App3 # Set the app name to 'ayush-nginx-crash-course-App3' as an environment variable
+
+    # Map port 3003 on the host machine to port 3000 inside the container
+    ports:
+      - "3003:3000"
