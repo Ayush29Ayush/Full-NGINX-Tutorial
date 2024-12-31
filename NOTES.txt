@@ -104,3 +104,47 @@ Important: After making configuration changes, reload or restart NGINX for them 
     * To start multiple instances of node.js server using docker compose, use command "docker compose up --build -d"
     * To check logs of the containers, use command "docker compose logs -f <service_name>". For example, "docker compose logs -f app1"
     * Second way to check logs is to use the container_id. Use command "docker logs <container_id>". For example, "docker logs <container_id>"
+
+#! Install NGINX and configure it as a reverse proxy
+10. How we will install NGINX
+    * It will help us LOAD BALANCE our application.
+    * It will help us HANDLE SSL encryption and enforce HTTPS.
+
+    * Install NGINX using command "sudo apt update && sudo apt install nginx"
+    * Check if NGINX is installed using command "nginx -v"
+    * To know the location of nginx, use command "whereis nginx" or "nginx -V"
+    * To know the location of nginx configuration file, use command "sudo find / -name nginx.conf"
+
+    ---------------------------------------------------
+    #! Do not do this until needed
+    * To completely remove nginx from your system, use command "sudo apt-get purge nginx nginx-common nginx-full"
+    * To install nginx again, use command "sudo apt-get install nginx"
+    * In your browser, go to "http://localhost" to check if NGINX is running or not
+    --------------------------------------------------
+
+    * To open NGINX configuration file in VS code, use command "code /etc/nginx/nginx.conf" 
+
+11. In terms of Nginx:
+    * Directives: Key Value pairs to configure NGINX. Example:- "listen 80;", "worker_processes 1;", etc
+    * Context: NGINX configuration context. Example:- "events {}", "http {}", "server {}", etc
+
+#! Start NGINX and Test Load Balancing
+12. For version 1 of NGINX setup without SSL, refer file "nginx-version-1.conf"
+13. Now run these following commands:
+    * Start docker containers using command "docker compose up --build -d"
+    * To start NGINX, use command "sudo systemctl start nginx"
+    * To reload NGINX, use command "sudo systemctl reload nginx"
+    * To restart NGINX, use command "sudo systemctl restart nginx"
+
+    * Stop docker containers using command "docker compose down"
+    * To stop NGINX, use command "sudo systemctl stop nginx"
+
+14. Use command "docker compose up --build" to start the containers in attached mode.
+
+
+15. Right now, when we go to "localhost:8080", we access the proxy server using nginx and when we go to "localhost:3000", we access the node.js server directly.
+Ques? Should we have the individual backend server also exposed to internet?
+    * No, since nginx itself is a proxy web server, we should not expose it to internet. 
+    * We should only expose the frontend to the internet. 
+    * You will only open port 8080 or whichever port Nginx listens to.
+    * All other ports will not be publicly accessible.
