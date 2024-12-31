@@ -92,3 +92,15 @@ Important: After making configuration changes, reload or restart NGINX for them 
 9. Lets dockerize our application where we will start 3 instances of the node.js server as docker containers.
     * Create a dockerfile which contains the instructions(blueprint) to build the docker image, defining what goes into the image and how the container should behave when it runs.
     * Create a docker image which is a standalone execution environment for our application which includes everything needed to run our application. It's a snapshot of an environment that can be used to create and run our application.
+    * Use command "docker build -t ayush-nginx-crash-course-app:1.0 ." to build the docker image.
+    * Check the docker image using command "docker images | grep ayush-nginx-crash-course-app"
+    * Now that we have the docker image, we can now easily run multiple instances of node.js server without any conflicts.
+
+    * Now lets run our application using docker containers from our newly created docker image. Use command "docker run -p 3000:3000 -d ayush-nginx-crash-course-app:1.0"
+    * To check the containers running, use command "docker ps" and to list all the containers, use command "docker ps -a"
+    * To stop the container, use command "docker stop <container_id>"
+
+    * To start multiple instances of node.js server, we will use docker compose. Docker Compose is a tool for defining and running multi-container Docker applications. It uses a YAML file to configure services and their dependencies.
+    * To start multiple instances of node.js server using docker compose, use command "docker compose up --build -d"
+    * To check logs of the containers, use command "docker compose logs -f <service_name>". For example, "docker compose logs -f app1"
+    * Second way to check logs is to use the container_id. Use command "docker logs <container_id>". For example, "docker logs <container_id>"
