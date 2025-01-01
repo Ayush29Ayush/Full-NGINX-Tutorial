@@ -148,3 +148,72 @@ Ques? Should we have the individual backend server also exposed to internet?
     * We should only expose the frontend to the internet. 
     * You will only open port 8080 or whichever port Nginx listens to.
     * All other ports will not be publicly accessible.
+
+#! Configure HTTPS - Encrypted Connection
+    * HTTPS uses SSL to encrypt the data transmitted over the web
+    * All communication between the client and the server is encrypted
+    * Even if a man-in-the-middle attack is performed, the data is still encrypted
+    * HTTPS is the standard for secure communication over the web
+
+16. Obtain an SSL/TLS certificate
+    * SSL certificates enable encryption by using public-key cryptography
+    * When a user connects to a website via HTTPS, the web server provides its SSL certificate, which contains the public key
+    * The client then uses the public key to establish a secure, encrypted session with the server
+
+    a) Generate a self-signed certificate
+        * Generated and signed by the server itself
+        * When the client(browser) sees this verification, it gives a warning
+        * Command => `openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-selfsigned.key -out nginx-selfsigned.crt`
+            -openssl: The base command for OpenSSL utility.
+            -req: Specifies that we're generating a certificate request.
+            -x509: Creates a self-signed certificate instead of just a certificate signing request.
+            -nodes: Prevents the private key from being encrypted with a passphrase.
+            -days 365: Sets the validity period of the certificate to 365 days.
+            -newkey rsa:2048: Generates a new 2048-bit RSA key pair.
+            -keyout nginx-selfsigned.key: Specifies the output file for the private key.
+            -out nginx-selfsigned.crt: Specifies the output file for the public key certificate.
+
+    b) CA-Signed certificate
+        * Issued and authenticated by a trusted certificate authority
+        * CA verifies the identity of the organization requesting the certificate
+        * When the client(browser) sees this verification, it can trust the certificate and gives no warning
+
+17. We will create self signed certificate inside a folder named "my-self-signed-nginx-certificates"
+
+ayush@pop-os:~/Desktop/Full NGINX Tutorial with Node.js and Docker/nginx-crash-course/my-self-signed-nginx-certificates$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout nginx-selfsigned.key -out nginx-selfsigned.crt
+.+..+...+....+...+........+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*............+...+....+...........+.......+...+..+...+...................+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+..+.+.....+...+....+...+..+.+..+............+...+...+.+.........+......+.....+.+...............+..+.+......+......+.....+....+...........+............+...............+......+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+.+..+.+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+...+.........+...+.........+.+.........+.....+.+..+...............+...+...+....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.....+...+...+......+.........+.......+.....+..........+...+.........+.....+...+....+...............+.....+...+............+.+..+.......+...+...+..+...+....+...+..+.+........+......+......+.......+..+...+.+.....+.......+..+............+....+.....+.......+...+......+...+..+.+..+...+.........+....+.....+....+......+.................+.......+...+..+.+..+....+...+............+.........+..+....+...+........+.......+..+....+..............+.......+........+...+.......+...+...+.........+..+...+.......+........+..................+.......+......+.....+..........+......+...+......+..............+......+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:IN
+State or Province Name (full name) [Some-State]:
+Locality Name (eg, city) []:
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:        
+Organizational Unit Name (eg, section) []:
+Common Name (e.g. server FQDN or YOUR name) []:
+Email Address []:
+ayush@pop-os:~/Desktop/Full NGINX Tutorial with Node.js and Docker/nginx-crash-course/my-self-signed-nginx-certificates$ ls
+nginx-selfsigned.crt  nginx-selfsigned.key
+
+18. Here we can observe that:
+    * Two files are created: nginx-selfsigned.crt and nginx-selfsigned.key
+    * .key is the private key
+    * .crt is the public key certificate
+
+#! Now lets configure HTTPS for Nginx server
+    * Check file "nginx-version-2-with-SSL.conf"
+    * Use command "code /etc/nginx/nginx.conf" and paste the contents of "nginx-version-2-with-SSL.conf" inside the file
+    
+    * Now restart NGINX using command "sudo systemctl restart nginx" or "sudo nginx -s reload"
+    * Start your docker containers using command "docker compose up --build -d"
+    * Go to "localhost:8080" in your browser and you can see that the page was redirected to "https://localhost"
+    * You can also go on the the default port i.e "localhost:443" to see the same page.
+    * We will keep getting the warning stating "NOT SECURE" because we are using self-signed certificate rather than CA-signed certificate.
+
+-------------------------------------------THE END----------------------------------------------
